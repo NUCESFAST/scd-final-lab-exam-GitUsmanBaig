@@ -19,7 +19,7 @@ spec:
         - containerPort: 3132
         env:
         - name: MONGO_HOST
-          value: "mu-mongodb-container"
+          value: "mongodb"
         - name: MONGO_PORT
           value: "27017"
 ---
