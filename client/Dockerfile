@@ -9,7 +9,7 @@ RUN npm run build
 # Nginx stage
 FROM nginx:1.21.5-alpine
 # Copy the build files to the nginx directory
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /1132_frontend/build /usr/share/nginx/html
 # Copy the nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
 # Expose port 1132

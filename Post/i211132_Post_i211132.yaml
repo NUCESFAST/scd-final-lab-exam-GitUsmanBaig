@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: post-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: post-backend
+  template:
+    metadata:
+      labels:
+        app: post-backend
+    spec:
+      containers:
+      - name: post-backend
+        image: i211132usman/post-service:latest
+        ports:
+        - containerPort: 3132
+        env:
+        - name: MONGO_HOST
+          value: "mu-mongodb-container"
+        - name: MONGO_PORT
+          value: "27017"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: post-backend
+spec:
+  selector:
+    app: post-backend
+  ports:
+    - protocol: TCP
+      port: 3132
+      targetPort: 3132
+  type: LoadBalancer
