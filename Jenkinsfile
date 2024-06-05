@@ -24,7 +24,7 @@ pipeline {
                         dir(service) {
                             // Install dependencies
                             sh 'echo npm install'
-                            sh 'echo sleep 130'
+                            sh 'sleep 130'
 
                             // Build Docker image
                             // def dockerImage = docker.build("i211132usman/${service}")
