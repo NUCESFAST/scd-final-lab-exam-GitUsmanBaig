@@ -46,7 +46,8 @@ pipeline {
                     def ports = [AUTH_PORT, CLASSROOMS_PORT, CLIENT_PORT, EVENT_BUS_PORT, POST_PORT]
                     for (int i = 0; i < services.size(); i++) {
                         sh "docker run --rm -d -p ${ports[i]}:${ports[i]} --name ${services[i]} i211132usman/${services[i]}"
-                        sh 'sleep 10' // Give the app some time to start
+                         // Give the app some time to start
+                        sh 'sleep 5'
                         sh "curl localhost:${ports[i]}"
                         sh "docker stop ${services[i]}"
                     }
