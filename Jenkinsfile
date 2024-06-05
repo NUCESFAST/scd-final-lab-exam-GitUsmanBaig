@@ -23,16 +23,15 @@ pipeline {
                     for (service in services) {
                         dir(service) {
                             // Install dependencies
-                            sh 'echo npm install'
-                            sh 'sleep 30'
+                            sh 'npm install'
 
                             // Build Docker image
-                            // def dockerImage = docker.build("i211132usman/${service}")
+                            def dockerImage = docker.build("i211132usman/${service}")
 
                             // Push Docker image
-                            // docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                            //     dockerImage.push("latest")
-                            // }
+                            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                                dockerImage.push("latest")
+                            }
                         }
                     }
                 }
@@ -46,11 +45,11 @@ pipeline {
                     def services = ['Auth', 'Classrooms', 'client', 'event-bus', 'Post']
                     def ports = [AUTH_PORT, CLASSROOMS_PORT, CLIENT_PORT, EVENT_BUS_PORT, POST_PORT]
                     for (int i = 0; i < services.size(); i++) {
-                        sh " echo docker run --rm -d -p ${ports[i]}:${ports[i]} --name ${services[i]} i211132usman/${services[i]}"
+                        sh "docker run --rm -d -p ${ports[i]}:${ports[i]} --name ${services[i]} i211132usman/${services[i]}"
                          // Give the app some time to start
-                        sh 'sleep 10'
-                        sh "echo curl localhost:${ports[i]}"
-                        sh "echo docker stop ${services[i]}"
+                        sh 'sleep 5'
+                        sh "curl localhost:${ports[i]}"
+                        sh "docker stop ${services[i]}"
                     }
                 }
             }
