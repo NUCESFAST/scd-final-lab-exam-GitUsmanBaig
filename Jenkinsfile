@@ -24,7 +24,7 @@ pipeline {
                         dir(service) {
                             // Install dependencies
                             sh 'echo npm install'
-                            sh 'sleep 197'
+                            sh 'sleep 30'
 
                             // Build Docker image
                             // def dockerImage = docker.build("i211132usman/${service}")
@@ -48,7 +48,7 @@ pipeline {
                     for (int i = 0; i < services.size(); i++) {
                         sh " echo docker run --rm -d -p ${ports[i]}:${ports[i]} --name ${services[i]} i211132usman/${services[i]}"
                          // Give the app some time to start
-                        sh 'sleep 30'
+                        sh 'sleep 10'
                         sh "echo curl localhost:${ports[i]}"
                         sh "echo docker stop ${services[i]}"
                     }
